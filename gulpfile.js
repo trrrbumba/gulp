@@ -11,7 +11,7 @@ let path = {
         fonts: project_folder + "/fonts/",
     },
     src: {
-        html: source_folder + "/",
+        html: source_folder + "/*.html",
         css: source_folder + "/scss/style.scss",
         js: source_folder + "/js/script.js",
         img: source_folder + "/img/**/*.{gif,jpg,svg,ico,webp,png}",
@@ -40,7 +40,16 @@ function browserSync(params) {
     })
 }
 
-let watch = gulp.parallel(browserSync);
+function html() {
+    return src(path.src.html)
+    .pipe(dest(path.build.html))
+    .pipe(browsersync.stream())
+}
 
+let build = gulp.series(html);
+let watch = gulp.parallel(build, browserSync);
+
+exports.html = html;
+exports.build = build;
 exports.watch = watch;
-exports.default = watch;
+ exports.default = watch;
