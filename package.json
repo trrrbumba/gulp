@@ -1,7 +1,7 @@
 {
   "name": "nice-gulp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Сборка gulp",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,9 +9,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-file-include": "^2.3.0"
   },
   "dependencies": {
     "browser-sync": "^2.27.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trrrbumba/nice-gulp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/trrrbumba/nice-gulp/issues"
+  },
+  "homepage": "https://github.com/trrrbumba/nice-gulp#readme"
 }
