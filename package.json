@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "del": "^6.0.0",
     "gulp": "^4.0.2",
-    "gulp-file-include": "^2.3.0"
+    "gulp-file-include": "^2.3.0",
+    "gulp-sass": "^5.0.0",
+    "sass": "latest"
   },
   "dependencies": {
     "browser-sync": "^2.27.5"
