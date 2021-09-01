@@ -24,7 +24,7 @@ let path = {
     js: source_folder + "/js/**/*.js",
     img: source_folder + "/img/**/*.{gif,jpg,svg,ico,webp,png}",
   },
-  clean: "./" + project_folder + "/",
+  clean: "./" + project_folder + "/"
 };
 
 let { src, dest } = require("gulp"),
@@ -32,15 +32,19 @@ let { src, dest } = require("gulp"),
   browsersync = require("browser-sync").create(),
   fileinclude = require("gulp-file-include"),
   del = require("del"),
-  scss = require('gulp-sass')(require('sass'));
+  scss = require("gulp-sass")(require("sass")),
+  autoprefixer = require("gulp-autoprefixer"),
+  group_media = require("gulp-group-css-media-queries"),
+  clean_css = require("gulp-clean-css"),
+  rename = require("gulp-rename");
 
 function browserSync(params) {
   browsersync.init({
     server: {
-      baseDir: "./" + project_folder + "/",
+      baseDir: "./" + project_folder + "/"
     },
     port: 3000,
-    notify: false,
+    notify: false
   });
 }
 
@@ -53,15 +57,32 @@ function html() {
 
 function css() {
   return src(path.src.css)
-  .pipe(scss({ 
-    outputStyle: 'expanded' 
-  }).on('error', scss.logError))
-  .pipe(dest(path.build.css))
-  .pipe(browsersync.stream());
+    .pipe(
+      scss({
+        outputStyle: "expanded"
+      }).on("error", scss.logError)
+    )
+    .pipe(group_media())
+    .pipe(
+      autoprefixer({
+        overrideBrowserlist: ["last 5 versions"],
+        cascade: true
+      })
+    )
+    .pipe(dest(path.build.css))
+    .pipe(clean_css())
+    .pipe(
+      rename({
+        extname: ".min.css"
+      })
+    )
+    .pipe(dest(path.build.css))
+    .pipe(browsersync.stream());
 }
 
-function watchFiles (params) {
-  gulp.watch([path.watch.html],html);
+function watchFiles(params) {
+  gulp.watch([path.watch.html], html);
+  gulp.watch([path.watch.css], css);
 }
 
 function clean(params) {
@@ -71,10 +92,8 @@ function clean(params) {
 let build = gulp.series(clean, gulp.parallel(css, html));
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
-
 exports.css = css;
 exports.html = html;
 exports.build = build;
 exports.watch = watch;
 exports.default = watch;
-
