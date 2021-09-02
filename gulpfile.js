@@ -38,7 +38,10 @@ let { src, dest } = require("gulp"),
   clean_css = require("gulp-clean-css"),
   rename = require("gulp-rename"),
   uglify = require("gulp-uglify-es").default,
-  image = require("gulp-image");
+  image = require("gulp-image"),
+  webp = require("gulp-webp"),
+  webphtml = require("gulp-webp-html"),
+  webpcss = require("gulp-webpcss");
   
 
 function browserSync(params) {
@@ -54,8 +57,9 @@ function browserSync(params) {
 function html() {
   return src(path.src.html)
     .pipe(fileinclude())
+    .pipe(webphtml())
     .pipe(dest(path.build.html))
-    .pipe(browsersync.stream());
+    .pipe(browsersync.stream())
 }
 
 function css() {
@@ -72,6 +76,7 @@ function css() {
         cascade: true
       })
     )
+    .pipe(webpcss({webpClass: '.webp',noWebpClass: '.no-webp'}))
     .pipe(dest(path.build.css))
     .pipe(clean_css())
     .pipe(
@@ -101,6 +106,13 @@ function js() {
 
 function images() {
   return src(path.src.img)
+  .pipe(
+    webp({
+      guality: 70
+    })
+  )
+  .pipe(dest(path.build.img))
+  .pipe(src(path.src.img))
   .pipe(
     image({
       progressive: true,
