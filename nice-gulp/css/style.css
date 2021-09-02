@@ -1,0 +1,49 @@
+@font-face {
+  font-family: "BriosoPro Italic";
+  font-display: swap;
+  src: url("../fonts/BriosoPro Italic.woff") format("woff"), url("../fonts/BriosoPro Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "d9464-arkhip_font";
+  font-display: swap;
+  src: url("../fonts/d9464-arkhip_font.woff") format("woff"), url("../fonts/d9464-arkhip_font.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-size: 10px;
+  display: flex;
+}
+
+span {
+  font-size: 40px;
+}
+
+div {
+  font-size: 50px;
+}
+
+@media (max-width: 76px) {
+  span {
+    font-size: 15px;
+  }
+
+  div {
+    font-size: 20px;
+  }
+}
+@supports (-webkit-appearance:none){
+
+}
+
+ @media (max-width: 76px){
+
+@supports (-webkit-appearance:none){
+
+}
+
+}
